@@ -1,119 +1,66 @@
-<div align="center">
-  <img src="./static/android-chrome-192x192.png" width="100" height="100" alt="Logo">
-  <h1>plinko-game</h1>
-  <p>A web Plinko game inspired by Stake.com's Plinko game.</p>
-  <p>Play now 👉 <a href="https://plinko-web-game.netlify.app/" target="_blank" rel="noreferrer">https://plinko-web-game.netlify.app/</a></p>
-  <img src="./screenshots/desktop-1.jpg" width="800">
-</div>
+# College Plinko - Two-Stage Gambling Game
 
-## About
+A college-themed Plinko gambling game with a unique two-stage gameplay system.
 
-Plinko is a classic game where the player drops a ball in a multi-row pin pyramid, where the ball bounces randomly until it reaches the payout bins at the bottom.
+## Game Flow
 
-This project is a replication of [Stake.com's Plinko game](https://stake.com/casino/games/plinko), created using [Svelte](https://svelte.dev/), [Tailwind CSS](https://tailwindcss.com/), and [matter-js](https://github.com/liabru/matter-js). This website is a fun personal project to learn Svelte, and it is not affiliated with Stake.com in any way. I don't encourage gambling, so that's why I created a free-to-play version of the game.
+### Stage 1: Budget Gambling
 
-### This project is NON-PROFIT
+- Players start with a balance of funds
+- They can gamble any amount to win a college budget
+- The potential budget range is based on the gamble amount:
+  - Minimum: $1,000 or 50% of gamble amount (whichever is higher)
+  - Maximum: 300% of gamble amount
+- If successful, they move to Stage 2
 
-Please do NOT send me emails or invitations asking me to implement a Plinko game for your company or personal portfolio. This project is for personal hobby only. It is NOT a promotion, and I will IGNORE any freelance invitations 🙏.
+### Stage 2: College Selection & Plinko
 
-Please fork this project on your own if you want to build on top of it.
+- Players see their won budget and available colleges
+- Colleges are filtered based on the budget (higher budget = better colleges)
+- Players select a target college
+- They play ONE Plinko ball to try to get into their chosen college
+- The Plinko bins show college names instead of multipliers
+- Success/failure determines if they get into the college
 
-## Features
+## College System
 
-- 🤑 100% free to play, add money at any time (~~not another crypto scam~~)
-- 🤖 Manual and auto-bet modes
-- 📊 Real-time live stats
-- 📱 Responsive design
+The game includes a comprehensive list of colleges with:
 
-## Limitations
+- **Name**: College name
+- **Min Budget**: Minimum budget required to access this college
+- **Prestige**: Rating from 1-10 indicating college quality
+- **Risk Level**: LOW, MEDIUM, or HIGH based on budget requirements
 
-The biggest limitation is that this project calculates the outcome on the client-side, so we cannot pre-determine the outcome before ball drop, nor force the ball to drop to a specific pin.
+### College Examples:
 
-This is because this project uses [matter-js](https://github.com/liabru/matter-js) as the physics engine. This engine runs on client-side, so the outcome is unknown until the ball reaches the bottom. This is different from Stake.com's implementation, where they calculate the outcome in a back-end server, then drop the ball to the determined pin.
+- **Elite Universities**: Harvard, MIT, Princeton (Prestige 9-10, Budget $25k+)
+- **Top Universities**: Rice, UPenn, UChicago (Prestige 8-9, Budget $20k+)
+- **State Universities**: UT Austin, Texas A&M (Prestige 7, Budget $12k+)
+- **Community Colleges**: (Prestige 1, Budget $0)
 
-Due to the physics engine's unpredictability, the actual average return value may be higher than the expected value (sometimes positive return). This is problematic for real-money gambling, since casinos make money by having a [house advantage](https://en.wikipedia.org/wiki/Casino_game#House_advantage), where the expected return is always less than 1. This could be fixed by adjusting the bin payouts, but I stick to the original Stake.com's payout table for simplicity.
+## Technical Implementation
 
-## Development
+### New Components:
 
-### Getting Started
+- `BudgetGamble.svelte`: Stage 1 gambling interface
+- `CollegeSelection.svelte`: Stage 2 college selection
+- `CollegePlinko.svelte`: Modified Plinko for college theme
+- `CollegeBinsRow.svelte`: College names in bins instead of multipliers
 
-> [!NOTE]
-> Requires Node.js 20 or later.
+### Game State Management:
 
-1. Install [pnpm](https://pnpm.io/installation) version 9 or later
-2. Clone this repository
-3. Install dependencies
+- `gameStage`: Controls current stage (BUDGET_GAMBLE, COLLEGE_SELECTION, COLLEGE_PLINKO)
+- `collegeBudget`: The budget won from Stage 1
+- `selectedCollege`: The college chosen for Plinko
+- `derivedAvailableColleges`: Colleges available based on budget
 
-   ```bash
-   pnpm install
-   ```
+## How to Play
 
-4. Start the development server
+1. **Start**: Begin with Stage 1 (Budget Gambling)
+2. **Gamble**: Choose an amount to gamble for college budget
+3. **Win Budget**: Get a random budget within the potential range
+4. **Select College**: Choose from available colleges based on your budget
+5. **Play Plinko**: Drop ONE ball to try to get into your chosen college
+6. **Result**: Success or failure determines college admission
 
-   ```bash
-   pnpm dev
-   ```
-
-### Building for Production
-
-The entire site is statically generated using [@sveltejs/adapter-static](https://github.com/sveltejs/kit/tree/main/packages/adapter-static).
-
-1. Generate a static build
-
-   ```bash
-   pnpm build
-   ```
-
-2. Preview the build site
-
-   ```bash
-   pnpm preview
-   ```
-
-### Testing
-
-For unit tests, run:
-
-```bash
-pnpm test:unit
-```
-
-For end-to-end tests powered by [Playwright](https://playwright.dev/):
-
-1. Build for production
-
-   ```bash
-   pnpm build
-   ```
-
-2. Run the tests
-
-   ```bash
-   # Run in UI mode (recommended when writing tests)
-   pnpm test:e2e:ui
-
-   # Alternatively, run in headless mode
-   pnpm test:e2e
-   ```
-
-### Benchmark
-
-A hidden page is only available in local dev environment to benchmark the payout probabilities and expected values. I used this page to tune the parameters of the matter-js physics engine and control the expected payout.
-
-To visit this page, visit the below URL after starting the development server with `pnpm dev`:
-
-```
-http://localhost:5173/benchmark
-```
-
-## Release
-
-This project uses [Netlify](https://www.netlify.com/) for deployment. To trigger a production deployment, create a commit with message starting with `chore(release)` in the `main` branch.
-
-## More Screenshots
-
-Mobile:
-
-| Manual Mode                             | Auto Mode                               |
-| --------------------------------------- | --------------------------------------- |
-| ![Mobile 1](./screenshots/mobile-1.jpg) | ![Mobile 2](./screenshots/mobile-2.jpg) |
+The game emphasizes the relationship between budget and college quality, making it both educational and entertaining!
