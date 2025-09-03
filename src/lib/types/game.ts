@@ -1,6 +1,6 @@
 import type { RowCount } from '$lib/constants/game';
 export type { RowCount } from '$lib/constants/game';
-
+const logos = import.meta.glob('../assets/*.svg', { eager: true, import: 'default' }); // import for college assets aka logos
 export enum BetMode {
   MANUAL = 'MANUAL',
   AUTO = 'AUTO',
@@ -59,12 +59,20 @@ export type WinRecord = {
    */
   profit: number;
 };
+function getLogo(filename: string): string {
+  const logo = logos[`../assets/${filename}`];
+  if (typeof logo === 'string') {
+    return logo;
+  }
+  const fallback = logos['../assets/logo.svg'];
+  return typeof fallback === 'string' ? fallback : '';
+};
 
 export type College = {
   name: string;
   minBudget: number;
   prestige: number;
-  logo: string;
+  logo: typeof logos['../assets/logo.svg'];
 };
 
 export const colleges: College[] = [
@@ -72,73 +80,73 @@ export const colleges: College[] = [
     name: 'Rice University',
     minBudget: 100000,
     prestige: 9,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Rice_Owl_logo.svg/1200px-Rice_Owl_logo.svg.png',
+    logo: getLogo('Rice_Owl_logo.svg'), // placeholder
   },
   {
     name: 'Harvard University',
     minBudget: 25000,
     prestige: 10,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Harvard_shield_wreath.svg/1200px-Harvard_shield_wreath.svg.png',
+    logo: getLogo('Harvard_University_coat_of_arms.svg'),
   },
   {
     name: 'Princeton University',
     minBudget: 25000,
     prestige: 10,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/71/Princeton_University_shield.svg/1200px-Princeton_University_shield.svg.png',
+    logo: getLogo('Princeton_seal.svg'),
   },
   {
     name: 'University of Pennsylvania (UPenn)',
     minBudget: 22000,
     prestige: 9,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3a/University_of_Pennsylvania_shield.svg/1200px-University_of_Pennsylvania_shield.svg.png',
+    logo: getLogo('University_of_Pennsylvania_shield.svg'), // placeholder
   },
   {
     name: 'Massachusetts Institute of Technology (MIT)',
     minBudget: 25000,
     prestige: 10,
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/1200px-MIT_logo.svg.png',
+    logo: getLogo('MIT_logo.svg'), // placeholder
   },
   {
     name: 'University of Chicago (UChicago)',
     minBudget: 22000,
     prestige: 9,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/58/University_of_Chicago_shield.svg/1200px-University_of_Chicago_shield.svg.png',
+    logo: getLogo('University_of_Chicago_shield.svg'), // placeholder
   },
   {
     name: 'Washington University in St. Louis (WashU)',
     minBudget: 20000,
     prestige: 8,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Washington_University_in_St._Louis_seal.svg/1200px-Washington_University_in_St._Louis_seal.svg.png',
+    logo: getLogo('Washington_University_in_St._Louis_seal.svg'),
   },
   {
     name: 'University of Texas at Austin',
     minBudget: 15000,
     prestige: 7,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/53/University_of_Texas_at_Austin_logo.svg/1200px-University_of_Texas_at_Austin_logo.svg.png',
+    logo: getLogo('University_of_Texas_at_Austin_logo.svg'), // placeholder
   },
   {
     name: 'Texas A&M University',
     minBudget: 12000,
     prestige: 7,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Texas_A%26M_University_logo.svg/1200px-Texas_A%26M_University_logo.svg.png',
+    logo: getLogo('Texas_A%26M_University_logo.svg'), // placeholder
   },
   {
     name: 'Trinity University',
     minBudget: 12000,
     prestige: 7,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Trinity_University_Seal.svg/1200px-Trinity_University_Seal.svg.png',
+    logo: getLogo('Trinity_University_Seal.svg'), // placeholder
   },
   {
     name: 'Southwestern University',
     minBudget: 10000,
     prestige: 6,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Southwestern_University_Seal.svg/1200px-Southwestern_University_Seal.svg.png',
+    logo: getLogo('Southwestern_University_Seal.svg'), // placeholder
   },
   {
     name: 'University of Texas at Dallas (UTD)',
     minBudget: 10000,
     prestige: 6,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/40/University_of_Texas_at_Dallas_logo.svg/1200px-University_of_Texas_at_Dallas_logo.svg.png',
+    logo: getLogo('University_of_Texas_at_Dallas_logo.svg'), // placeholder
   },
   {
     name: 'Texas Tech University',
@@ -150,97 +158,97 @@ export const colleges: College[] = [
     name: 'University of Houston',
     minBudget: 9000,
     prestige: 5,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/University_of_Houston_Logo.svg/1200px-University_of_Houston_Logo.svg.png',
+    logo: getLogo('University_of_Houston_seal.svg'), // placeholder
   },
   {
     name: 'Austin College',
     minBudget: 9000,
     prestige: 5,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Austin_College_Seal.svg/1200px-Austin_College_Seal.svg.png',
+    logo: getLogo('Austin_College_Seal.svg'), // placeholder
   },
   {
     name: 'University of Dallas',
     minBudget: 8000,
     prestige: 5,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/University_of_Dallas_Seal.svg/1200px-University_of_Dallas_Seal.svg.png',
+    logo: getLogo('University_of_Dallas_Seal.svg'), // placeholder
   },
   {
     name: 'St. Edward’s University',
     minBudget: 8000,
     prestige: 5,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d6/St._Edward%27s_University_Seal.svg/1200px-St._Edward%27s_University_Seal.svg.png',
+    logo: getLogo('St._Edward%27s_University_Seal.svg'), // placeholder
   },
   {
     name: 'LeTourneau University',
     minBudget: 8000,
     prestige: 5,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Letourneau_University_Seal.svg/1200px-Letourneau_University_Seal.svg.png',
+    logo: getLogo('Letourneau_University_Seal.svg'), // placeholder
   },
   {
     name: 'St. Mary’s University',
     minBudget: 7000,
     prestige: 4,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/St._Mary%27s_University_%28Texas%29_Seal.svg/1200px-St._Mary%27s_University_%28Texas%29_Seal.svg.png',
+    logo: getLogo('St._Mary%27s_University_%28Texas%29_Seal.svg'), // placeholder
   },
   {
     name: 'University of St. Thomas',
     minBudget: 7000,
     prestige: 4,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/University_of_St._Thomas_Seal.svg/1200px-University_of_St._Thomas_Seal.svg.png',
+    logo: getLogo('University_of_St._Thomas_Seal.svg'), // placeholder
   },
   {
     name: 'Dallas Baptist University',
     minBudget: 7000,
     prestige: 4,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Dallas_Baptist_University_Seal.svg/1200px-Dallas_Baptist_University_Seal.svg.png',
+    logo: getLogo('Dallas_Baptist_University_Seal.svg'), // placeholder
   },
   {
     name: 'University of North Texas (UNT)',
     minBudget: 7000,
     prestige: 4,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/University_of_North_Texas_logo.svg/1200px-University_of_North_Texas_logo.svg.png',
+    logo: getLogo('UNT logo.svg'),
   },
   {
     name: 'Texas State University',
     minBudget: 6000,
     prestige: 3,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/19/Texas_State_University_logo.svg/1200px-Texas_State_University_logo.svg.png',
+    logo: getLogo('Texas State.svg'), // placeholder
   },
   {
     name: 'University of Texas at San Antonio (UTSA)',
     minBudget: 6000,
     prestige: 3,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/12/University_of_Texas_at_San_Antonio_logo.svg/1200px-University_of_Texas_at_San_Antonio_logo.svg.png',
+    logo: getLogo('UTSA logo.svg'),
   },
   {
     name: 'University of Texas Rio Grande Valley (UTRGV)',
     minBudget: 5000,
     prestige: 2,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/University_of_Texas_Rio_Grande_Valley_logo.svg/1200px-University_of_Texas_Rio_Grande_Valley_logo.svg.png',
+    logo: getLogo('ut rio grande logo.svg'),
   },
   {
     name: 'University of Texas at Arlington (UTA)',
     minBudget: 5000,
     prestige: 2,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/University_of_Texas_at_Arlington_logo.svg/1200px-University_of_Texas_at_Arlington_logo.svg.png',
+    logo: getLogo('UTA logo.svg'),
   },
   {
     name: 'University of Texas at Tyler',
     minBudget: 5000,
     prestige: 2,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/90/University_of_Texas_at_Tyler_Seal.svg/1200px-University_of_Texas_at_Tyler_Seal.svg.png',
+    logo: getLogo('UT Tyler logo.svg'),
   },
   {
     name: 'University of Houston–Clear Lake',
     minBudget: 4000,
     prestige: 2,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f7/UHCL_Seal.svg/1200px-UHCL_Seal.svg.png',
+    logo: getLogo('University_of_Houston–Clear_Lake_seal.svg'),
   },
   {
     name: 'West Texas A&M University',
     minBudget: 4000,
     prestige: 2,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/59/West_Texas_A%26M_University_logo.svg/1200px-West_Texas_A%26M_University_logo.svg.png',
+    logo: getLogo('WestTexasA&M logo.svg'),
   },
   {
     name: 'Community College',
