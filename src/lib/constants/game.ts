@@ -61,7 +61,7 @@ export const binPayouts: Record<RowCount, Record<RiskLevel, number[]>> = rowCoun
         const distance = Math.abs(i - center);
         const maxDistance = center;
         // Invert so edges have higher multipliers
-        return Math.round((Math.max(0.5, 0.5 + (distance / maxDistance) * 0.95)) * 100) / 100;
+        return Math.round((Math.max(0.5, 0.5 + (distance / maxDistance) * 2.3)) * 100) / 100;
       }),
       MEDIUM: Array(rowCount + 1).fill(0).map((_, i) => {
         // Medium risk: moderate volatility
@@ -69,7 +69,7 @@ export const binPayouts: Record<RowCount, Record<RiskLevel, number[]>> = rowCoun
         const distance = Math.abs(i - center);
         const maxDistance = center;
         // Invert so edges have higher multipliers
-        return Math.round((Math.max(0.2, 0.2 + (distance / maxDistance) * 2.4)) * 100) / 100;
+        return Math.round((Math.max(0.2, 0.2 + (distance / maxDistance) * 4.2)) * 100) / 100;
       }),
       HIGH: Array(rowCount + 1).fill(0).map((_, i) => {
         // High risk: high volatility
@@ -77,7 +77,7 @@ export const binPayouts: Record<RowCount, Record<RiskLevel, number[]>> = rowCoun
         const distance = Math.abs(i - center);
         const maxDistance = center;
         // Invert so edges have higher multipliers
-        return Math.round((Math.max(0.1, 0.1 + (distance / maxDistance) * 4.9)) * 100) / 100;
+        return Math.round((Math.max(0.1, 0.1 + (distance / maxDistance) * 6.0)) * 100) / 100;
       }),
     };
     return acc;

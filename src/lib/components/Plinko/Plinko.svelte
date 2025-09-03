@@ -44,7 +44,7 @@
 
 <div class="relative bg-gray-900">
   <!-- College Selection Prompt (when player has enough money) -->
-  {#if $balance >= $collegeGambleAmount}
+  {#if $gameStage === 'PLINKO_GAMBLE'}
     <div class="border-b border-green-700 bg-green-900/20 p-4 text-center">
       <h3 class="mb-2 text-lg font-semibold text-white">🎓 Ready for College Selection!</h3>
       <p class="mb-4 text-green-300">
@@ -60,22 +60,23 @@
         🎓 Proceed to College Selection
       </button>
     </div>
-  {/if}
 
-  <div class="mx-auto flex h-full flex-col px-4 pb-4" style:max-width={`${WIDTH}px`}>
-    <div class="relative w-full" style:aspect-ratio={`${WIDTH} / ${HEIGHT}`}>
-      {#if $plinkoEngine === null}
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <CircleNotch class="size-20 animate-spin text-slate-600" weight="bold" />
-        </div>
-      {/if}
+    <div class="mx-auto flex h-full flex-col px-4 pb-4" style:max-width={`${WIDTH}px`}>
+      <div class="relative w-full" style:aspect-ratio={`${WIDTH} / ${HEIGHT}`}>
+        {#if $plinkoEngine === null}
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <CircleNotch class="size-20 animate-spin text-slate-600" weight="bold" />
+          </div>
+        {/if}
 
-      <canvas use:initPlinko width={WIDTH} height={HEIGHT} class="absolute inset-0 h-full w-full">
-      </canvas>
+        <canvas use:initPlinko width={WIDTH} height={HEIGHT} class="absolute inset-0 h-full w-full">
+        </canvas>
+      </div>
+      <BinsRow />
     </div>
-    <BinsRow />
-  </div>
-  <div class="absolute top-1/2 right-[5%] -translate-y-1/2">
-    <LastWins />
-  </div>
+    <div class="absolute top-1/2 right-[5%] -translate-y-1/2">
+      <LastWins />
+    </div>
+  {/if}
+<!-- leave empty because compiler is complaining like a lil behbeh-->
 </div>

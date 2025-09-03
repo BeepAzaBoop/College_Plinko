@@ -36,7 +36,6 @@
         return 'text-gray-400';
     }
   }
-  const collegeImages;
 </script>
 
 {#if showResult && resultCollege}
@@ -48,12 +47,15 @@
         <div
           class="mb-4 flex flex-col items-center gap-4 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 p-6"
         >
-          <!-- Placeholder for college/university logo -->
+          <img
+            src={resultCollege.logo || '/src/lib/assets/logo.svg'}
+            alt={resultCollege.name}
+            class="h-full w-full rounded"
+          />
+          <!-- THE LINE ABOVE IS FOR LOGOS-->
           <div
             class="mb-2 flex h-16 w-16 items-center justify-center rounded bg-gray-300 text-2xl text-gray-500"
-          >
-            IMG
-          </div>
+          ></div>
           <h3 class="mb-2 text-2xl font-bold text-white">{resultCollege.name}</h3>
           <p class="text-blue-100">You've been accepted!</p>
         </div>
