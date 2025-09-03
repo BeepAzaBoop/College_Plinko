@@ -5,7 +5,13 @@
   import Plinko from '$lib/components/Plinko';
   import SettingsWindow from '$lib/components/SettingsWindow';
   import Sidebar from '$lib/components/Sidebar';
-  import { setBalanceFromLocalStorage, writeBalanceToLocalStorage } from '$lib/utils/game';
+  import CollegePlinko from '$lib/components/Plinko/CollegePlinko.svelte';
+  import { gameStage } from '$lib/stores/game';
+  import {
+    setBalanceFromLocalStorage,
+    writeBalanceToLocalStorage,
+    resetGame,
+  } from '$lib/utils/game';
   import GitHubLogo from 'phosphor-svelte/lib/GithubLogo';
 
   $effect(() => {
@@ -22,6 +28,12 @@
       <div class="mx-auto">
         <Balance />
       </div>
+      <button
+        onclick={resetGame}
+        class="rounded-md bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700"
+      >
+        New Game
+      </button>
     </div>
   </nav>
 
@@ -30,7 +42,13 @@
       <div class="flex flex-col-reverse overflow-hidden rounded-lg lg:w-full lg:flex-row">
         <Sidebar />
         <div class="flex-1">
-          <Plinko />
+          {#if $gameStage === 'PLINKO_GAMBLE'}
+            <Plinko />
+          {:else if $gameStage === 'COLLEGE_PLINKO'}
+            <CollegePlinko />
+          {:else}
+            <Plinko />
+          {/if}
         </div>
       </div>
     </div>

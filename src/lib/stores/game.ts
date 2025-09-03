@@ -1,10 +1,13 @@
 import PlinkoEngine from '$lib/components/Plinko/PlinkoEngine';
 import { binColor, DEFAULT_BALANCE } from '$lib/constants/game';
 import {
-  RiskLevel,
+  getRiskLevel,
+  getAvailableColleges,
+  type RiskLevel,
   type BetAmountOfExistingBalls,
   type RowCount,
   type WinRecord,
+  type College,
 } from '$lib/types';
 import { interpolateRgbColors } from '$lib/utils/colors';
 import { countValueOccurrences } from '$lib/utils/numbers';
@@ -18,17 +21,15 @@ export const betAmountOfExistingBalls = writable<BetAmountOfExistingBalls>({});
 
 export const rowCount = writable<RowCount>(16);
 
-export const riskLevel = writable<RiskLevel>(RiskLevel.MEDIUM);
+// New stores for two-stage college gambling
+export const gameStage = writable<'PLINKO_GAMBLE' | 'COLLEGE_PLINKO'>('PLINKO_GAMBLE');
+export const collegeBudget = writable<number>(0);
+export const availableColleges = writable<College[]>([]);
+export const selectedCollege = writable<College | null>(null);
+export const collegeGambleAmount = writable<number>(5000); // Fixed $5,000 for college gambling
+export const hasDroppedCollegeBall = writable<boolean>(false);
 
 export const winRecords = writable<WinRecord[]>([]);
-
-/**
- * History of total profits. Should be updated whenever a new win record is pushed
- * to `winRecords` store.
- *
- * We deliberately don't use `derived(winRecords, ...)` to optimize performance.
- */
-export const totalProfitHistory = writable<number[]>([0]);
 
 /**
  * Game balance, which is saved to local storage.
@@ -38,6 +39,19 @@ export const totalProfitHistory = writable<number[]>([0]);
  * be slow on low-end devices.
  */
 export const balance = writable<number>(DEFAULT_BALANCE);
+
+/**
+ * Risk level for the current game session.
+ */
+export const riskLevel = writable<RiskLevel>('MEDIUM');
+
+/**
+ * History of total profits. Should be updated whenever a new win record is pushed
+ * to `winRecords` store.
+ *
+ * We deliberately don't use `derived(winRecords, ...)` to optimize performance.
+ */
+export const totalProfitHistory = writable<number[]>([0]);
 
 /**
  * RGB colors for every bin. The length of the array is the number of bins.
@@ -78,4 +92,9 @@ export const binProbabilities = derived<
     probabilities[i] = occurrences[i] / $winRecords.length || 0;
   }
   return probabilities;
+});
+
+// Derived store to update available colleges when budget changes
+export const derivedAvailableColleges = derived(collegeBudget, ($collegeBudget) => {
+  return getAvailableColleges($collegeBudget);
 });

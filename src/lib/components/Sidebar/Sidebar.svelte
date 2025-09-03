@@ -10,7 +10,7 @@
     rowCount,
   } from '$lib/stores/game';
   import { isGameSettingsOpen, isLiveStatsOpen } from '$lib/stores/layout';
-  import { BetMode, RiskLevel } from '$lib/types';
+  import { BetMode, type RiskLevel } from '$lib/types';
   import { flyAndScale } from '$lib/utils/transitions';
   import { Popover, Tooltip } from 'bits-ui';
   import ChartLine from 'phosphor-svelte/lib/ChartLine';
@@ -113,9 +113,9 @@
     { value: BetMode.AUTO, label: 'Auto' },
   ];
   const riskLevels = [
-    { value: RiskLevel.LOW, label: 'Low' },
-    { value: RiskLevel.MEDIUM, label: 'Medium' },
-    { value: RiskLevel.HIGH, label: 'High' },
+    { value: 'LOW', label: 'Low' },
+    { value: 'MEDIUM', label: 'Medium' },
+    { value: 'HIGH', label: 'High' },
   ];
   const rowCounts = rowCountOptions.map((value) => ({ value, label: value.toString() }));
 </script>
@@ -224,7 +224,7 @@
       <div class="relative">
         <input
           id="autoBetInput"
-          value={autoBetInterval === null ? autoBetInput : autoBetsLeft ?? 0}
+          value={autoBetInterval === null ? autoBetInput : (autoBetsLeft ?? 0)}
           disabled={autoBetInterval !== null}
           onfocusout={handleAutoBetInputFocusOut}
           type="number"

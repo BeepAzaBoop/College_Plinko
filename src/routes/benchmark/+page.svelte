@@ -3,7 +3,7 @@
   import Plinko from '$lib/components/Plinko';
   import { rowCountOptions } from '$lib/constants/game';
   import { plinkoEngine, riskLevel, rowCount } from '$lib/stores/game';
-  import { RiskLevel } from '$lib/types';
+  // import { RiskLevel } from '$lib/types';
 
   let dropBallInterval: ReturnType<typeof setInterval> | null = $state(null);
 
@@ -46,7 +46,7 @@
   <div class="flex items-center gap-4">
     <label for="riskLevel">Risk</label>
     <select id="riskLevel" bind:value={$riskLevel} class="border border-gray-400 p-2">
-      {#each [RiskLevel.LOW, RiskLevel.MEDIUM, RiskLevel.HIGH] as riskLevel}
+      {#each ['LOW', 'MEDIUM', 'HIGH'] as riskLevel}
         <option value={riskLevel}>{riskLevel}</option>
       {/each}
     </select>

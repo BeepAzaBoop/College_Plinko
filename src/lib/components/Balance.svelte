@@ -3,12 +3,10 @@
   import { flyAndScale } from '$lib/utils/transitions';
   import { Popover } from 'bits-ui';
 
-  let balanceFormatted = $derived(
-    $balance.toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }),
-  );
+  $: balanceFormatted = ($balance ?? 0).toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   const addMoneyAmounts = [100, 500, 1000];
 </script>

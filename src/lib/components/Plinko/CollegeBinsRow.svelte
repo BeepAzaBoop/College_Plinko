@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { binColorsByRowCount, binPayouts } from '$lib/constants/game';
-  import { plinkoEngine, riskLevel, rowCount, winRecords } from '$lib/stores/game';
+  import { binColorsByRowCount } from '$lib/constants/game';
+  import { plinkoEngine, rowCount, winRecords, derivedAvailableColleges } from '$lib/stores/game';
   import { isAnimationOn } from '$lib/stores/settings';
   import type { Action } from 'svelte/action';
 
@@ -46,24 +46,35 @@
 
     animation.play();
   }
+
+  // Get college names for bins based on available colleges
+  const collegeNames = $derived(
+    $derivedAvailableColleges.length > 0
+      ? $derivedAvailableColleges.map((college) => college.name)
+      : ['Community College', 'State School', 'University', 'Private College', 'Elite University'],
+  );
 </script>
 
 <!-- Height clamping in mobile: From 10px at 370px viewport width to 16px at 600px viewport width -->
 <div class="flex h-[clamp(10px,0.352px+2.609vw,16px)] w-full justify-center lg:h-7">
   {#if $plinkoEngine}
     <div class="flex gap-[1%]" style:width={`${($plinkoEngine.binsWidthPercentage ?? 0) * 100}%`}>
-      {#each binPayouts[$rowCount][$riskLevel] as payout, binIndex}
+      {#each Array($rowCount + 1) as _, binIndex}
         <!-- Font-size clamping:
-              - Mobile (< 1024px): From 4px at 370px viewport width to 6px at 600px viewport width
-              - Desktop (>= 1024px): From 6px at 1024px viewport width to 8px at 1100px viewport width
+              - Mobile (< 1024px): From 6px at 370px viewport width to 8px at 600px viewport width
+              - Desktop (>= 1024px): From 10px at 1024px viewport width to 12px at 1100px viewport width
          -->
         <div
           use:initAnimation
-          class="shadow-[0_2px var(--shadow-color)] lg:shadow-[0_3px var(--shadow-color)] flex min-w-0 flex-1 items-center justify-center rounded-xs text-[clamp(4px,1.784px+0.67vw,6px)] font-bold text-gray-950 lg:rounded-md lg:text-[clamp(6px,-8.944px+1.632vw,8px)]"
+          class="flex min-w-0 flex-1 items-center justify-center rounded-xs text-[clamp(6px,2.784px+0.87vw,8px)] font-bold text-gray-950 shadow-[0_2px_var(--shadow-color)] lg:rounded-md lg:text-[clamp(10px,-16.944px+2.632vw,12px)] lg:shadow-[0_3px_var(--shadow-color)]"
           style:background-color={binColorsByRowCount[$rowCount].background[binIndex]}
           style:--shadow-color={binColorsByRowCount[$rowCount].shadow[binIndex]}
         >
-          {payout}{payout < 100 ? '×' : ''}
+          {#if binIndex < collegeNames.length}
+            <span class="text-center leading-tight">{collegeNames[binIndex]}</span>
+          {:else}
+            <span class="text-center leading-tight">College {binIndex + 1}</span>
+          {/if}
         </div>
       {/each}
     </div>

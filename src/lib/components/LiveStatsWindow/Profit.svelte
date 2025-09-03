@@ -7,8 +7,8 @@
   let wins = $derived($winRecords.filter(({ profit }) => profit >= 0).length);
   let losses = $derived($winRecords.filter(({ profit }) => profit < 0).length);
 
-  let winsFormatted = $derived(wins.toLocaleString('en-US'));
-  let lossesFormatted = $derived(losses.toLocaleString('en-US'));
+  let winsFormatted = $derived((wins ?? 0).toLocaleString('en-US'));
+  let lossesFormatted = $derived((losses ?? 0).toLocaleString('en-US'));
 </script>
 
 <div class="flex rounded-md bg-slate-900 p-4 text-sm">

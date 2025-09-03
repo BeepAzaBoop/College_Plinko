@@ -1,7 +1,7 @@
 <script lang="ts">
   import { binPayouts, binProbabilitiesByRowCount, type RowCount } from '$lib/constants/game';
   import { binProbabilities, rowCount } from '$lib/stores/game';
-  import { RiskLevel } from '$lib/types';
+  import type { RiskLevel } from '$lib/types';
   import { dotProduct } from '$lib/utils/numbers';
   import Chart from 'chart.js/auto';
   import type { Action } from 'svelte/action';
@@ -109,16 +109,22 @@
     </tr>
   </thead>
   <tbody>
-    {#each [RiskLevel.LOW, RiskLevel.MEDIUM, RiskLevel.HIGH] as riskLevel}
+    {#each ['LOW', 'MEDIUM', 'HIGH'] as riskLevel}
       <tr>
         <td class="px-2 py-1">{riskLevel}</td>
         <td class="px-2 py-1 tabular-nums">
-          {getWeightedPayout($rowCount, riskLevel, binProbabilitiesByRowCount[$rowCount]).toFixed(
-            5,
-          )}
+          {getWeightedPayout(
+            $rowCount,
+            riskLevel as RiskLevel,
+            binProbabilitiesByRowCount[$rowCount],
+          ).toFixed(5)}
         </td>
         <td class="px-2 py-1 tabular-nums">
-          {getWeightedPayout($rowCount, riskLevel, Object.values($binProbabilities)).toFixed(5)}
+          {getWeightedPayout(
+            $rowCount,
+            riskLevel as RiskLevel,
+            Object.values($binProbabilities),
+          ).toFixed(5)}
         </td>
       </tr>
     {/each}

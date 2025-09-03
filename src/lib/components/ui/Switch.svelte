@@ -2,9 +2,11 @@
   import { Switch } from 'bits-ui';
   import { twMerge } from 'tailwind-merge';
 
-  type Props = Omit<Switch.Props, 'class'> & {
-    /** Additional classes to be applied to the root. */
+  type Props = {
+    checked?: boolean;
     class?: string;
+    disabled?: boolean;
+    id?: string;
   };
 
   let { checked = $bindable(undefined), class: className, ...props }: Props = $props();
@@ -19,6 +21,6 @@
   {...props}
 >
   <Switch.Thumb
-    class="pointer-events-none block size-5 rounded-full bg-white ring-0 shadow-lg transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+    class="pointer-events-none block size-5 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
   />
 </Switch.Root>
