@@ -24,7 +24,7 @@
 <div class="relative flex min-h-dvh w-full flex-col">
   <nav class="sticky top-0 z-10 w-full bg-gray-700 px-5 drop-shadow-lg">
     <div class="mx-auto flex h-14 max-w-7xl items-center justify-between">
-      <img src={logo} alt="logo" class="h-6 sm:h-7" />
+      <img src={logo} alt="logo" class="h-14 w-17" />
       <div class="mx-auto">
         <Balance />
       </div>
@@ -63,17 +63,17 @@
       <div class="flex items-center justify-between p-2">
         <p class="text-sm text-slate-500">
           <a
-            href="https://www.ansonh.com"
+            href="https://github.com/BeepAzaBoop/College_Plinko"
             target="_blank"
             rel="noreferrer"
             class=" text-cyan-600 transition hover:text-cyan-500"
           >
-            Anson Heung
+            Azael Garcia
           </a>
           © {new Date().getFullYear()}
         </p>
         <a
-          href="https://github.com/AnsonH/plinko-game"
+          href="https://github.com/BeepAzaBoop/College_Plinko"
           target="_blank"
           rel="noreferrer"
           class="flex items-center gap-1 p-1 text-sm text-slate-500 transition hover:text-cyan-500"
