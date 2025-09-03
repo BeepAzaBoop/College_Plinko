@@ -1,19 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta
-      property="og:description"
-      content="A web-based Plinko game inspired by Stake.com, built using Svelte and Tailwind CSS"
-    />
-    %sveltekit.head%
-  </head>
-  <body data-sveltekit-preload-data="hover">
-    <div style="display: contents">%sveltekit.body%</div>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta property="og:description"
+    content="A web-based Plinko game inspired by Stake.com, built using Svelte and Tailwind CSS" />
+  %sveltekit.head%
+</head>
+
+<body data-sveltekit-preload-data="hover">
+  <div style="display: contents">%sveltekit.body%</div>
+  <div id="reward-box" style="display:none;">
+    <div
+      style="position:fixed;top:5rem;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:1rem;background:#15803d;padding:1.5rem 2rem;border-radius:0.75rem;box-shadow:0 2px 8px rgba(0,0,0,0.2);color:white;">
+      <div
+        style="height:4rem;width:4rem;background:#d1d5db;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:2rem;">
+        IMG</div>
+      <span id="reward-text" style="font-size:1.25rem;font-weight:bold;"></span>
+    </div>
+  </div>
+  <script>
+    // Example usage: showReward('You got into Harvard!')
+    function showReward(result) {
+      document.getElementById('reward-text').textContent = result;
+      document.getElementById('reward-box').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('reward-box').style.display = 'none';
+      }, 4000);
+    }
+  </script>
+</body>
+
 </html>
