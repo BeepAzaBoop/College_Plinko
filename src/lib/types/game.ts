@@ -16,7 +16,9 @@ export function getRiskLevel(budget: number): RiskLevel {
   if (budget >= 10000) return 'MEDIUM';
   return 'HIGH';
 }
-
+export function countCollegeswithinBudget(budget: number): number {
+  return colleges.filter((college) => budget >= college.minBudget).length;
+}
 /**
  * A record of the bet amount associated to every existing ball in the game
  * that is still in motion.
@@ -72,15 +74,16 @@ export type College = {
   name: string;
   minBudget: number;
   prestige: number;
-  logo: typeof logos['../assets/logo.svg'];
+  logo: typeof logos['../assets/logo.svg']; // the fallback logo is logo.svg which is only used when there is a placeholder
 };
+
 
 export const colleges: College[] = [
   {
     name: 'Rice University',
     minBudget: 100000,
     prestige: 9,
-    logo: getLogo('Rice_Owl_logo.svg'), // placeholder
+    logo: getLogo('Rice_Owl_logo.svg'),
   },
   {
     name: 'Harvard University',
@@ -98,109 +101,109 @@ export const colleges: College[] = [
     name: 'University of Pennsylvania (UPenn)',
     minBudget: 22000,
     prestige: 9,
-    logo: getLogo('University_of_Pennsylvania_shield.svg'), // placeholder
+    logo: getLogo('Upenn.svg'), 
   },
   {
     name: 'Massachusetts Institute of Technology (MIT)',
     minBudget: 25000,
     prestige: 10,
-    logo: getLogo('MIT_logo.svg'), // placeholder
+    logo: getLogo('MIT.svg')
   },
   {
     name: 'University of Chicago (UChicago)',
     minBudget: 22000,
     prestige: 9,
-    logo: getLogo('University_of_Chicago_shield.svg'), // placeholder
+    logo: getLogo('UChicago.svg'),
   },
   {
     name: 'Washington University in St. Louis (WashU)',
     minBudget: 20000,
     prestige: 8,
-    logo: getLogo('Washington_University_in_St._Louis_seal.svg'),
+    logo: getLogo('WashU.svg'),
   },
   {
     name: 'University of Texas at Austin',
     minBudget: 15000,
     prestige: 7,
-    logo: getLogo('University_of_Texas_at_Austin_logo.svg'), // placeholder
+    logo: getLogo('UTAustin'),
   },
   {
     name: 'Texas A&M University',
     minBudget: 12000,
     prestige: 7,
-    logo: getLogo('Texas_A%26M_University_logo.svg'), // placeholder
+    logo: getLogo('TexasA&M.svg'),
   },
   {
     name: 'Trinity University',
     minBudget: 12000,
     prestige: 7,
-    logo: getLogo('Trinity_University_Seal.svg'), // placeholder
+    logo: getLogo('Trinity.svg'), 
   },
   {
     name: 'Southwestern University',
     minBudget: 10000,
     prestige: 6,
-    logo: getLogo('Southwestern_University_Seal.svg'), // placeholder
+    logo: getLogo('SouthWestern.svg'),
   },
   {
     name: 'University of Texas at Dallas (UTD)',
     minBudget: 10000,
     prestige: 6,
-    logo: getLogo('University_of_Texas_at_Dallas_logo.svg'), // placeholder
+    logo: getLogo('UTD.svg'), 
   },
   {
     name: 'Texas Tech University',
     minBudget: 9000,
     prestige: 5,
-    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a3/Texas_Tech_University_logo.svg/1200px-Texas_Tech_University_logo.svg.png',
+    logo : getLogo('TexasTech.svg'),
   },
   {
     name: 'University of Houston',
     minBudget: 9000,
     prestige: 5,
-    logo: getLogo('University_of_Houston_seal.svg'), // placeholder
+    logo: getLogo('UofH.svg'),
   },
   {
     name: 'Austin College',
     minBudget: 9000,
     prestige: 5,
-    logo: getLogo('Austin_College_Seal.svg'), // placeholder
+    logo: getLogo('AustinCollege.svg'),
   },
   {
     name: 'University of Dallas',
     minBudget: 8000,
     prestige: 5,
-    logo: getLogo('University_of_Dallas_Seal.svg'), // placeholder
+    logo: getLogo('UofDallas.svg'), 
   },
   {
     name: 'St. Edward’s University',
     minBudget: 8000,
     prestige: 5,
-    logo: getLogo('St._Edward%27s_University_Seal.svg'), // placeholder
+    logo: getLogo('Edwards.svg'), 
   },
   {
     name: 'LeTourneau University',
     minBudget: 8000,
     prestige: 5,
-    logo: getLogo('Letourneau_University_Seal.svg'), // placeholder
+    logo: getLogo('LeTourneau.svg'),
   },
   {
     name: 'St. Mary’s University',
     minBudget: 7000,
     prestige: 4,
-    logo: getLogo('St._Mary%27s_University_%28Texas%29_Seal.svg'), // placeholder
+    logo: getLogo('St._Mary%27s_University_%28Texas%29_Seal.svg'),
   },
   {
     name: 'University of St. Thomas',
     minBudget: 7000,
     prestige: 4,
-    logo: getLogo('University_of_St._Thomas_Seal.svg'), // placeholder
+    logo: getLogo('Thomas.svg'),
   },
   {
     name: 'Dallas Baptist University',
     minBudget: 7000,
     prestige: 4,
-    logo: getLogo('Dallas_Baptist_University_Seal.svg'), // placeholder
+    logo: getLogo('DBU.svg'),
   },
   {
     name: 'University of North Texas (UNT)',
@@ -212,7 +215,7 @@ export const colleges: College[] = [
     name: 'Texas State University',
     minBudget: 6000,
     prestige: 3,
-    logo: getLogo('Texas State.svg'), // placeholder
+    logo: getLogo('Texas State.svg'),
   },
   {
     name: 'University of Texas at San Antonio (UTSA)',
@@ -260,5 +263,12 @@ export const colleges: College[] = [
 
 
 export function getAvailableColleges(budget: number): College[] {
-  return colleges.filter((college) => budget >= college.minBudget);
+  return colleges.filter((college) => budget + 1500 >= college.minBudget);
 }
+
+
+const collegeLogos = colleges.map(college => college.logo);
+const MirroredCollegeLogos = [...collegeLogos].reverse();
+
+export { collegeLogos, MirroredCollegeLogos };
+

@@ -53,9 +53,6 @@
             class="h-full w-full rounded"
           />
           <!-- THE LINE ABOVE IS FOR LOGOS-->
-          <div
-            class="mb-2 flex h-16 w-16 items-center justify-center rounded bg-gray-300 text-2xl text-gray-500"
-          ></div>
           <h3 class="mb-2 text-2xl font-bold text-white">{resultCollege.name}</h3>
           <p class="text-blue-100">You've been accepted!</p>
         </div>

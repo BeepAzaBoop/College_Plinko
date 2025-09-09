@@ -3,6 +3,7 @@
   import { plinkoEngine, rowCount, winRecords, derivedAvailableColleges } from '$lib/stores/game';
   import { isAnimationOn } from '$lib/stores/settings';
   import type { Action } from 'svelte/action';
+  
 
   /**
    * Bounce animations for each bin, which is played when a ball falls into the bin.
@@ -53,6 +54,33 @@
       ? $derivedAvailableColleges.map((college) => college.name)
       : ['Community College', 'State School', 'University', 'Private College', 'Elite University'],
   );
+  const MirroredCollegeNames = $derived(
+    $derivedAvailableColleges.length > 0
+      ? $derivedAvailableColleges
+          .map((college) => college.name)
+          .slice()
+          .reverse()
+      : ['Community College', 'State School', 'University', 'Private College', 'Elite University']
+          .slice()
+          .reverse(),
+  );
+  const collegeLogos: string[] = $derived(
+    $derivedAvailableColleges.length > 0
+      ? $derivedAvailableColleges.map((college) => college.logo as string)
+      : [
+          /* fallback logo paths here */
+        ],
+  );
+  const mirroredCollegeLogos: string[] = $derived(
+    $derivedAvailableColleges.length > 0
+      ? $derivedAvailableColleges
+          .map((college) => college.logo as string)
+          .slice()
+          .reverse()
+      : [
+          /* fallback logo paths here, reversed */
+        ],
+  );
 </script>
 
 <!-- Height clamping in mobile: From 10px at 370px viewport width to 16px at 600px viewport width -->
@@ -60,23 +88,28 @@
   {#if $plinkoEngine}
     <div class="flex gap-[1%]" style:width={`${($plinkoEngine.binsWidthPercentage ?? 0) * 100}%`}>
       {#each Array($rowCount + 1) as _, binIndex}
-        <!-- Font-size clamping:
-              - Mobile (< 1024px): From 6px at 370px viewport width to 8px at 600px viewport width
-              - Desktop (>= 1024px): From 10px at 1024px viewport width to 12px at 1100px viewport width
-         -->
         <div
           use:initAnimation
           class="flex min-w-0 flex-1 items-center justify-center rounded-xs text-[clamp(6px,2.784px+0.87vw,8px)] font-bold text-gray-950 shadow-[0_2px_var(--shadow-color)] lg:rounded-md lg:text-[clamp(10px,-16.944px+2.632vw,12px)] lg:shadow-[0_3px_var(--shadow-color)]"
           style:background-color={binColorsByRowCount[$rowCount].background[binIndex]}
           style:--shadow-color={binColorsByRowCount[$rowCount].shadow[binIndex]}
         >
-          {#if binIndex < collegeNames.length}
-            <span class="text-center leading-tight">{collegeNames[binIndex]}</span>
+          {#if binIndex < collegeLogos.length}
+            <img
+              src={collegeLogos[binIndex]}
+              alt="College Logo"
+              class="h-full max-h-full max-w-full object-contain"
+            />
           {:else}
-            <span class="text-center leading-tight">College {binIndex + 1}</span>
+            <img
+              src={mirroredCollegeLogos[binIndex - collegeLogos.length]}
+              alt="College Logo"
+              class="h-full max-h-full max-w-full object-contain"
+            />
           {/if}
         </div>
       {/each}
     </div>
+    <!-- close the div you opened after the if -->
   {/if}
 </div>
