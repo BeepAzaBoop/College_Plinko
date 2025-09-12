@@ -98,3 +98,4 @@ export const binProbabilities = derived<
 export const derivedAvailableColleges = derived(collegeBudget, ($collegeBudget) => {
   return getAvailableColleges($collegeBudget);
 });
+

@@ -33,7 +33,7 @@
 <div class="flex min-h-[400px] flex-col items-center justify-center rounded-lg bg-gray-900 p-8">
   <div class="mb-8 text-center">
     <h1 class="mb-4 text-3xl font-bold text-white">College Fund Gambling</h1>
-    <p class="text-lg text-gray-300">Gamble your funds to get a college budget!</p>
+    <p class="text-lg text-gray-300">Invest your funds to get a college budget!</p>
   </div>
 
   <div class="w-full max-w-md rounded-lg bg-gray-800 p-6">

@@ -51,7 +51,7 @@
         Current balance: <span class="font-bold text-green-400">${$balance.toLocaleString()}</span>
       </p>
       <p class="mb-4 text-green-300">
-        This will become your college budget. Continue gambling or proceed to college selection?
+        This will become your college budget. Continue investing or proceed to college selection?
       </p>
       <button
         onclick={proceedToCollegeSelection}
